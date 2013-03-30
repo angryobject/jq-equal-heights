@@ -1,20 +1,33 @@
-(function ($) {
-  $.fn.equalHeights = function() {
-    $(this).each(function(){
-      var $elems = $(this).children(),
-        maxHeight = 0;
+(function () {
+  'use strict';
 
-      $elems.each(function(){
-        var height = $(this).height();
+  function init ($) {
+    $.fn.equalHeights = function() {
+      $(this).each(function(){
+        var $elems = $(this).children(),
+          maxHeight = 0;
 
-        if (height > maxHeight) {
-          maxHeight = height;
-        }
+        $elems.each(function(){
+          var height = $(this).height();
+
+          if (height > maxHeight) {
+            maxHeight = height;
+          }
+        });
+
+        $elems.css({'min-height': maxHeight});
       });
 
-      $elems.css({'min-height': maxHeight});
-    });
+      return this;
+    };
+  }
 
-    return this;
-  };
-}(jQuery));
+  if ( typeof define === 'function' && define.amd && define.amd.jQuery ) {
+    define(['jquery'], function ($) {
+      init($);
+    });
+  } else {
+    init(jQuery);
+  }
+
+}());
